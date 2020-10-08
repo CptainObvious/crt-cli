@@ -1,14 +1,9 @@
 package client
 
 import (
-	"encoding/json"
-	"encoding/xml"
-	"fmt"
-	"net"
-	"net/http"
-	"strings"
 
-	"github.com/cptainobvious/crt-cli/model"
+	"net/http"
+
 )
 
 const (
