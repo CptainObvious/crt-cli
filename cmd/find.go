@@ -35,7 +35,7 @@ func FindCommand(args []string) {
 		panic(err)
 	}
 	domain := &model.Domain{Name: domainName}
-	c := client.NewCrtClient(model.JsonFormat)
+	c := client.NewCrtClient(model.JsonFormat, client.NewHttpClient())
 	domains, err := c.GetSubDomains(domain)
 	for _, d := range domains {
 		fmt.Println(fmt.Sprintf("Name: %s, Alive %t", d.GetName(), d.IsAlive()))

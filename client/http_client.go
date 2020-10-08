@@ -15,7 +15,7 @@ type HttpClient struct {
 	baseUrl string
 }
 
-func newHttpClient() HttpClient{
+func NewHttpClient() HttpClient{
 	return HttpClient{}
 }
 
