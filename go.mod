@@ -1,4 +1,4 @@
-module domain-finder-https
+module github.com/cptainobvious/crt-cli
 
 go 1.13
 

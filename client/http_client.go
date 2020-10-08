@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 
-	"domain-finder-https/model"
+	"github.com/cptainobvious/crt-cli/model"
 )
 
 const (

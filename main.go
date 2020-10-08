@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "domain-finder-https/cmd"
+import "github.com/cptainobvious/crt-cli/cmd"
 
 func main() {
   cmd.Execute()

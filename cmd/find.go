@@ -20,9 +20,9 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"domain-finder-https/client"
-	"domain-finder-https/model"
-	"domain-finder-https/utils"
+	"github.com/cptainobvious/crt-cli/client"
+	"github.com/cptainobvious/crt-cli/model"
+	"github.com/cptainobvious/crt-cli/utils"
 )
 
 // findCmd represents the find command
