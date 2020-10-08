@@ -26,6 +26,10 @@ import (
 var CmdUsage = fmt.Sprintf("%s exemple.com", os.Args[0])
 
 func FindCommand(args []string) {
+	if len(args) == 1 {
+		fmt.Println(CmdUsage)
+		return
+	}
 	domainName, err := utils.GetDomainName(args[1])
 	if err != nil {
 		panic(err)
