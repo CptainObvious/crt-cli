@@ -15,8 +15,12 @@ limitations under the License.
 */
 package main
 
-import "github.com/cptainobvious/crt-cli/cmd"
+import (
+  "os"
+
+  "github.com/cptainobvious/crt-cli/cmd"
+)
 
 func main() {
-  cmd.Execute()
+  cmd.FindCommand(os.Args)
 }

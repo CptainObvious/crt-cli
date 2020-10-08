@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
+	"net"
 	"net/http"
 	"strings"
 
@@ -79,10 +80,19 @@ func (c *CrtClient) GetSubDomains(domain model.IDomain) ([]model.IDomain, error)
 			if found {
 				break
 			}
+			ipArr, err := net.LookupIP(name)
+			alive := true
+			if err != nil {
+				if e := err.(*net.DNSError); !e.IsNotFound {
+					return nil, err
+				}
+				alive = false
+				ipArr = append(ipArr, nil)
+			}
 			domains = append(domains, &model.Domain{
 				Name:  name,
-				Alive: false,
-				Ip:    nil,
+				Alive: alive,
+				Ip: ipArr[0],
 			})
 			presentNames = append(presentNames, name)
 		}

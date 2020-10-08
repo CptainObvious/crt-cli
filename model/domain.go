@@ -9,6 +9,8 @@ type IDomain interface {
 	GetName() string
 	SetAlive(bool)
 	SetIp(string) error
+	GetIp() net.IP
+	IsAlive() bool
 }
 
 type Domain struct {
@@ -17,6 +19,14 @@ type Domain struct {
 	Ip	 net.IP
 }
 
+// Return the ip of the domain
+func (d *Domain) GetIp() net.IP {
+	return d.Ip
+}
+
+func (d *Domain) IsAlive() bool  {
+	return d.Alive
+}
 func (d *Domain) SetAlive(alive bool) {
 	d.Alive = alive
 }
@@ -39,9 +49,13 @@ func NewDomain(name string, alive bool, ipStr string) (IDomain, error) {
 	if ip == nil && ipStr != "" {
 		return nil, fmt.Errorf("%s is not a valid ip", ipStr)
 	}
-	return &Domain{
+	d := &Domain{
 		Name:  name,
 		Alive: alive,
-		Ip:    ip,
-	}, nil
+	}
+	err := d.SetIp(ipStr)
+	if err != nil {
+		return nil, err
+	}
+	return d, nil
 }
