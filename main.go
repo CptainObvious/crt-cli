@@ -16,11 +16,16 @@ limitations under the License.
 package main
 
 import (
+  "fmt"
   "os"
 
   "github.com/cptainobvious/crt-cli/cmd"
 )
 
 func main() {
-  cmd.FindCommand(os.Args)
+  if len(os.Args) == 1 {
+    fmt.Printf("usage %s find www.example.com", os.Args[0])
+    return
+  }
+  cmd.FindCommand(os.Args[1:])
 }

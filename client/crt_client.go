@@ -74,28 +74,29 @@ func (c *CrtClient) GetSubDomains(domain model.IDomain) ([]model.IDomain, error)
 						return
 					}
 					alive = false
-					errs <- nil
 				}
 				domain.SetAlive(alive)
 				if len(ipArr) > 0 {
 					if err := domain.SetIp(ipArr[0].String()); err != nil{
 						errs <- err
+						return
 					}
 				}
+				errs <- nil
 			}(d)
-			var finalErr error
-			for i := 0; i < len(domainNames); i++ {
-				if err := <-errs; err != nil {
-					if finalErr == nil {
-						finalErr = errors.New("")
-					}
-					finalErr = fmt.Errorf("%s - %s", finalErr.Error(), err.Error())
-				}
-			}
-			if finalErr != nil {
-				return nil, finalErr
-			}
 			dCache.CacheValue(name)
+		}
+		var finalErr error
+		for i := 0; i < len(errs); i++ {
+			if err := <-errs; err != nil {
+				if finalErr == nil {
+					finalErr = errors.New("")
+				}
+				finalErr = fmt.Errorf("%s - %s", finalErr.Error(), err.Error())
+			}
+		}
+		if finalErr != nil {
+			return nil, finalErr
 		}
 
 	}
