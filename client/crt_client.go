@@ -16,6 +16,7 @@ type CrtClient struct {
 	HttpClient
 	baseUrl string
 	format  string
+	blacklist *model.Blacklist
 }
 
 func NewCrtClient(format string, client HttpClient) *CrtClient {
@@ -61,6 +62,11 @@ func (c *CrtClient) GetSubDomains(domain model.IDomain) ([]model.IDomain, error)
 			if dCache.Exist(name) {
 				break
 			}
+			if c.blacklist != nil && c.blacklist.IsBlacklisted(name) {
+				// Cache blacklisted value cause Cache.Exist is less expensive than Blacklist.IsBlacklisted
+				dCache.CacheValue(name)
+				break
+			}
 			d := &model.Domain{
 				Name: name,
 			}
@@ -101,4 +107,9 @@ func (c *CrtClient) GetSubDomains(domain model.IDomain) ([]model.IDomain, error)
 
 	}
 	return domains, nil
+}
+
+func (c *CrtClient) WithBlacklist(blacklist *model.Blacklist) *CrtClient{
+	c.blacklist = blacklist
+	return c
 }
